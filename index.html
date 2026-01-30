@@ -1,19 +1,381 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-    <title>我的第一个网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cxxbt</title>
     <style>
-        body { font-family: Arial; text-align: center; padding: 50px; }
-        h1 { color: #2c3e50; }
-        .special { background-color: gold; padding: 10px; border-radius: 10px; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f8ff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            color: #d2691e;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8b4513;
+            margin-bottom: 20px;
+        }
+        
+        .dog-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin: 30px auto;
+        }
+        
+        /* 绘制大黄狗 */
+        .dog {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* 狗的身体 */
+        .body {
+            position: absolute;
+            width: 180px;
+            height: 100px;
+            background-color: #ffcc00;
+            border-radius: 50% 50% 40% 40%;
+            top: 150px;
+            left: 60px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* 狗的头部 */
+        .head {
+            position: absolute;
+            width: 120px;
+            height: 100px;
+            background-color: #ffcc00;
+            border-radius: 45% 45% 40% 40%;
+            top: 80px;
+            left: 150px;
+            z-index: 2;
+        }
+        
+        /* 狗的耳朵 */
+        .ear {
+            position: absolute;
+            width: 40px;
+            height: 60px;
+            background-color: #d2691e;
+            border-radius: 50% 50% 0 0;
+            top: 60px;
+        }
+        
+        .ear.left {
+            left: 145px;
+            transform: rotate(-20deg);
+        }
+        
+        .ear.right {
+            left: 195px;
+            transform: rotate(20deg);
+        }
+        
+        /* 狗的眼睛 */
+        .eye {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #333;
+            border-radius: 50%;
+            top: 110px;
+            z-index: 3;
+        }
+        
+        .eye.left {
+            left: 170px;
+        }
+        
+        .eye.right {
+            left: 210px;
+        }
+        
+        .eye::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background-color: white;
+            border-radius: 50%;
+            top: 4px;
+            left: 5px;
+        }
+        
+        /* 狗的鼻子 */
+        .nose {
+            position: absolute;
+            width: 25px;
+            height: 15px;
+            background-color: #333;
+            border-radius: 50% 50% 40% 40%;
+            top: 135px;
+            left: 187px;
+            z-index: 3;
+        }
+        
+        /* 狗的嘴巴 */
+        .mouth {
+            position: absolute;
+            width: 30px;
+            height: 15px;
+            border-bottom: 4px solid #333;
+            border-radius: 0 0 50% 50%;
+            top: 155px;
+            left: 185px;
+            z-index: 3;
+        }
+        
+        /* 狗的腿 */
+        .leg {
+            position: absolute;
+            width: 25px;
+            height: 60px;
+            background-color: #ffcc00;
+            top: 240px;
+        }
+        
+        .leg.front.left {
+            left: 90px;
+        }
+        
+        .leg.front.right {
+            left: 145px;
+        }
+        
+        .leg.back.left {
+            left: 185px;
+        }
+        
+        .leg.back.right {
+            left: 240px;
+        }
+        
+        /* 狗的尾巴 */
+        .tail {
+            position: absolute;
+            width: 60px;
+            height: 15px;
+            background-color: #ffcc00;
+            border-radius: 0 10px 10px 0;
+            top: 120px;
+            left: 40px;
+            transform-origin: left center;
+            animation: wag 1s infinite alternate ease-in-out;
+        }
+        
+        /* 尾巴摇摆动画 */
+        @keyframes wag {
+            0% {
+                transform: rotate(-10deg);
+            }
+            100% {
+                transform: rotate(20deg);
+            }
+        }
+        
+        /* 狗的整体动画 */
+        .dog {
+            animation: bounce 3s infinite ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* 狗项圈 */
+        .collar {
+            position: absolute;
+            width: 110px;
+            height: 15px;
+            background-color: #ff4081;
+            border-radius: 10px;
+            top: 105px;
+            left: 155px;
+            z-index: 3;
+        }
+        
+        .collar::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff4081;
+            border-radius: 50%;
+            top: -3px;
+            left: 45px;
+        }
+        
+        /* 介绍文本 */
+        .description {
+            max-width: 600px;
+            background-color: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 30px;
+            line-height: 1.6;
+        }
+        
+        .description h2 {
+            color: #d2691e;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .description p {
+            margin-bottom: 15px;
+            color: #555;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .feature {
+            background-color: #fff8e1;
+            padding: 12px 20px;
+            border-radius: 10px;
+            border-left: 4px solid #ffcc00;
+            font-weight: bold;
+            color: #8b4513;
+        }
+        
+        .footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #888;
+            font-size: 0.9rem;
+            padding: 15px;
+        }
+        
+        /* 响应式设计 */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .dog-container {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .body {
+                width: 150px;
+                height: 80px;
+                top: 120px;
+                left: 50px;
+            }
+            
+            .head {
+                width: 100px;
+                height: 80px;
+                top: 70px;
+                left: 120px;
+            }
+            
+            .description {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
-    <h1>🌐 你好，世界！</h1>
-    <p>这是我用 <strong>HTML</strong> 和 <strong>CSS</strong> 创建的第一个网页。</p>
-    <p class=“special”>感觉很酷！</p>
-    <hr>
-    <p>现在，我可以用 <a href=“https://www.baidu.com“ target=“_blank“>这个链接</a> 跳转到百度。</p>
-    <img src=“https://httpbin.org/image/png“ alt=“一张示例图片“ width=“200“>
+    <div class="header">
+        <h1>cxxbt</h1>
+        <div class="subtitle">可爱的大黄狗动画网站</div>
+    </div>
+    
+    <div class="dog-container">
+        <div class="dog">
+            <!-- 狗的尾巴 -->
+            <div class="tail"></div>
+            
+            <!-- 狗的身体 -->
+            <div class="body"></div>
+            
+            <!-- 狗的腿 -->
+            <div class="leg front left"></div>
+            <div class="leg front right"></div>
+            <div class="leg back left"></div>
+            <div class="leg back right"></div>
+            
+            <!-- 狗的耳朵 -->
+            <div class="ear left"></div>
+            <div class="ear right"></div>
+            
+            <!-- 狗的头部 -->
+            <div class="head"></div>
+            
+            <!-- 狗项圈 -->
+            <div class="collar"></div>
+            
+            <!-- 狗的眼睛 -->
+            <div class="eye left"></div>
+            <div class="eye right"></div>
+            
+            <!-- 狗的鼻子 -->
+            <div class="nose"></div>
+            
+            <!-- 狗的嘴巴 -->
+            <div class="mouth"></div>
+        </div>
+    </div>
+    
+    <div class="description">
+        <h2>关于这只大黄狗</h2>
+        <p>这是一只用纯HTML和CSS绘制的可爱大黄狗！它的名字叫"小橙"，是一只活泼友好的狗狗。</p>
+        <p>注意观察，它的尾巴会不停地摇摆，身体也会轻微上下移动，就像在呼吸一样，这让它看起来更加生动可爱！</p>
+        <p>这只狗使用了明亮的黄色(#ffcc00)作为主色调，耳朵是深棕色(#d2691e)，脖子上还有一个粉红色的项圈。</p>
+        
+        <div class="features">
+            <div class="feature">纯CSS绘制</div>
+            <div class="feature">动画效果</div>
+            <div class="feature">响应式设计</div>
+            <div class="feature">无JavaScript</div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <p>这是一个简单的HTML/CSS练习项目 | 标题: cxxbt | 创建日期: 2025年</p>
+        <p>你可以将这段代码保存为HTML文件，在浏览器中打开就能看到这只大黄狗！</p>
+    </div>
 </body>
 </html>
