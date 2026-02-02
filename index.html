@@ -3,374 +3,764 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>cxxbt</title>
+    <title>新春纳福 | 春节吉祥网站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Arial Rounded MT Bold', 'Arial', sans-serif;
         }
         
         body {
-            background-color: #f0f8ff;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            font-family: 'Noto Serif SC', serif;
+            background: linear-gradient(to bottom, #0a1f44 0%, #1a1a2e 30%, #0a1f44 100%);
+            color: #fff;
+            overflow-x: hidden;
             min-height: 100vh;
-            padding: 20px;
-            color: #333;
-        }
-        
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        
-        h1 {
-            font-size: 3rem;
-            color: #d2691e;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-            margin-bottom: 10px;
-            letter-spacing: 3px;
-        }
-        
-        .subtitle {
-            font-size: 1.2rem;
-            color: #8b4513;
-            margin-bottom: 20px;
-        }
-        
-        .dog-container {
             position: relative;
-            width: 300px;
-            height: 300px;
-            margin: 30px auto;
         }
         
-        /* 绘制大黄狗 */
-        .dog {
-            position: relative;
+        /* 夜空背景 */
+        .sky {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
+            z-index: -1;
         }
         
-        /* 狗的身体 */
-        .body {
+        .star {
             position: absolute;
-            width: 180px;
-            height: 100px;
-            background-color: #ffcc00;
-            border-radius: 50% 50% 40% 40%;
-            top: 150px;
-            left: 60px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 50%;
         }
         
-        /* 狗的头部 */
-        .head {
+        /* 烟花容器 */
+        .fireworks-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        /* 云彩 */
+        .clouds {
+            position: fixed;
+            top: 20%;
+            width: 100%;
+            height: 30%;
+            z-index: 0;
+        }
+        
+        .cloud {
             position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+        
+        .cloud-1 {
             width: 120px;
-            height: 100px;
-            background-color: #ffcc00;
-            border-radius: 45% 45% 40% 40%;
-            top: 80px;
-            left: 150px;
+            height: 40px;
+            top: 10%;
+            left: 5%;
+            animation: float 25s infinite linear;
+        }
+        
+        .cloud-2 {
+            width: 180px;
+            height: 60px;
+            top: 25%;
+            right: 10%;
+            animation: float 30s infinite linear reverse;
+        }
+        
+        .cloud-3 {
+            width: 150px;
+            height: 50px;
+            top: 40%;
+            left: 15%;
+            animation: float 35s infinite linear;
+        }
+        
+        @keyframes float {
+            0% { transform: translateX(-100px); }
+            100% { transform: translateX(calc(100vw + 100px)); }
+        }
+        
+        /* 山脉 */
+        .mountains {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            z-index: 1;
+        }
+        
+        .mountain {
+            position: absolute;
+            bottom: 0;
+            background: linear-gradient(to top, #1a3c2e, #2d5c4a);
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        
+        .mountain-1 {
+            width: 300px;
+            height: 200px;
+            left: 5%;
+        }
+        
+        .mountain-2 {
+            width: 400px;
+            height: 280px;
+            left: 25%;
             z-index: 2;
         }
         
-        /* 狗的耳朵 */
-        .ear {
+        .mountain-3 {
+            width: 350px;
+            height: 230px;
+            right: 20%;
+            z-index: 1;
+        }
+        
+        .mountain-4 {
+            width: 250px;
+            height: 180px;
+            right: 5%;
+        }
+        
+        /* 房屋 */
+        .house-container {
+            position: fixed;
+            bottom: 18%;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5;
+            width: 300px;
+            height: 200px;
+        }
+        
+        .house {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: #8b0000;
+            border-radius: 10px 10px 0 0;
+        }
+        
+        .roof {
+            position: absolute;
+            top: -40px;
+            left: -10px;
+            width: 120%;
+            height: 80px;
+            background-color: #d4a017;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        
+        .roof-decoration {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 10px;
+            height: 20px;
+            background-color: #ffd700;
+        }
+        
+        .door {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 100px;
+            background-color: #5d2906;
+            border-radius: 5px 5px 0 0;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .door-knob {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background-color: #ffd700;
+            border-radius: 50%;
+        }
+        
+        .window {
             position: absolute;
             width: 40px;
-            height: 60px;
-            background-color: #d2691e;
-            border-radius: 50% 50% 0 0;
-            top: 60px;
-        }
-        
-        .ear.left {
-            left: 145px;
-            transform: rotate(-20deg);
-        }
-        
-        .ear.right {
-            left: 195px;
-            transform: rotate(20deg);
-        }
-        
-        /* 狗的眼睛 */
-        .eye {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #333;
-            border-radius: 50%;
-            top: 110px;
-            z-index: 3;
-        }
-        
-        .eye.left {
-            left: 170px;
-        }
-        
-        .eye.right {
-            left: 210px;
-        }
-        
-        .eye::after {
-            content: '';
-            position: absolute;
-            width: 6px;
-            height: 6px;
-            background-color: white;
-            border-radius: 50%;
-            top: 4px;
-            left: 5px;
-        }
-        
-        /* 狗的鼻子 */
-        .nose {
-            position: absolute;
-            width: 25px;
-            height: 15px;
-            background-color: #333;
-            border-radius: 50% 50% 40% 40%;
-            top: 135px;
-            left: 187px;
-            z-index: 3;
-        }
-        
-        /* 狗的嘴巴 */
-        .mouth {
-            position: absolute;
-            width: 30px;
-            height: 15px;
-            border-bottom: 4px solid #333;
-            border-radius: 0 0 50% 50%;
-            top: 155px;
-            left: 185px;
-            z-index: 3;
-        }
-        
-        /* 狗的腿 */
-        .leg {
-            position: absolute;
-            width: 25px;
-            height: 60px;
+            height: 40px;
             background-color: #ffcc00;
-            top: 240px;
+            border-radius: 5px;
+            box-shadow: inset 0 0 10px rgba(255, 255, 200, 0.8);
         }
         
-        .leg.front.left {
-            left: 90px;
-        }
-        
-        .leg.front.right {
-            left: 145px;
-        }
-        
-        .leg.back.left {
-            left: 185px;
-        }
-        
-        .leg.back.right {
-            left: 240px;
-        }
-        
-        /* 狗的尾巴 */
-        .tail {
-            position: absolute;
-            width: 60px;
-            height: 15px;
-            background-color: #ffcc00;
-            border-radius: 0 10px 10px 0;
-            top: 120px;
+        .window-left {
+            top: 40px;
             left: 40px;
-            transform-origin: left center;
-            animation: wag 1s infinite alternate ease-in-out;
         }
         
-        /* 尾巴摇摆动画 */
-        @keyframes wag {
-            0% {
-                transform: rotate(-10deg);
-            }
-            100% {
-                transform: rotate(20deg);
-            }
+        .window-right {
+            top: 40px;
+            right: 40px;
         }
         
-        /* 狗的整体动画 */
-        .dog {
-            animation: bounce 3s infinite ease-in-out;
-        }
-        
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        
-        /* 狗项圈 */
-        .collar {
+        .chimney {
             position: absolute;
-            width: 110px;
-            height: 15px;
-            background-color: #ff4081;
-            border-radius: 10px;
-            top: 105px;
-            left: 155px;
+            top: -60px;
+            right: 40px;
+            width: 30px;
+            height: 60px;
+            background-color: #a0522d;
+        }
+        
+        .smoke {
+            position: absolute;
+            top: -80px;
+            right: 35px;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            animation: smoke-float 4s infinite ease-out;
+        }
+        
+        @keyframes smoke-float {
+            0% { transform: translateY(0) scale(1); opacity: 0.8; }
+            100% { transform: translateY(-100px) scale(2); opacity: 0; }
+        }
+        
+        /* 小溪 */
+        .stream-container {
+            position: fixed;
+            bottom: 10%;
+            width: 100%;
+            height: 10%;
             z-index: 3;
         }
         
-        .collar::after {
+        .stream {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(64, 164, 223, 0.8), rgba(9, 86, 135, 0.9));
+            clip-path: polygon(0% 100%, 5% 80%, 15% 85%, 25% 75%, 35% 85%, 45% 70%, 55% 90%, 65% 75%, 75% 85%, 85% 78%, 95% 88%, 100% 100%);
+        }
+        
+        .water {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            animation: water-flow 3s infinite linear;
+        }
+        
+        @keyframes water-flow {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        
+        /* 主要内容 */
+        .content {
+            position: relative;
+            z-index: 10;
+            padding: 40px 20px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            margin-bottom: 60px;
+        }
+        
+        .title {
+            font-family: 'Ma Shan Zheng', cursive;
+            font-size: 4.5rem;
+            color: #ffd700;
+            text-shadow: 0 0 20px #ff6b00, 0 0 30px #ff0000;
+            margin-bottom: 20px;
+            letter-spacing: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        
+        /* 灯笼装饰 */
+        .lanterns {
+            display: flex;
+            justify-content: center;
+            margin: 40px 0;
+        }
+        
+        .lantern {
+            width: 60px;
+            height: 80px;
+            background-color: #ff0000;
+            border-radius: 30px;
+            margin: 0 20px;
+            position: relative;
+            box-shadow: 0 0 20px rgba(255, 0, 0, 0.7);
+            animation: lantern-sway 3s infinite alternate ease-in-out;
+        }
+        
+        .lantern:before {
             content: '';
             position: absolute;
-            width: 20px;
+            top: -10px;
+            left: 10px;
+            width: 40px;
+            height: 15px;
+            background-color: #ffd700;
+            border-radius: 5px;
+        }
+        
+        .lantern:after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 25px;
+            width: 10px;
             height: 20px;
-            background-color: #ff4081;
-            border-radius: 50%;
-            top: -3px;
-            left: 45px;
+            background-color: #ffd700;
         }
         
-        /* 介绍文本 */
-        .description {
-            max-width: 600px;
-            background-color: white;
-            padding: 25px;
+        .lantern-1 { animation-delay: 0s; }
+        .lantern-2 { animation-delay: 0.5s; }
+        .lantern-3 { animation-delay: 1s; }
+        .lantern-4 { animation-delay: 1.5s; }
+        
+        @keyframes lantern-sway {
+            0% { transform: rotate(-5deg); }
+            100% { transform: rotate(5deg); }
+        }
+        
+        /* 春节祝福 */
+        .blessings {
+            background-color: rgba(0, 0, 0, 0.5);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            margin-top: 30px;
-            line-height: 1.6;
+            padding: 30px;
+            margin: 40px 0;
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
         }
         
-        .description h2 {
-            color: #d2691e;
-            margin-bottom: 15px;
-            text-align: center;
+        .blessing-title {
+            font-size: 2.2rem;
+            color: #ffd700;
+            margin-bottom: 25px;
+            font-weight: 700;
         }
         
-        .description p {
-            margin-bottom: 15px;
-            color: #555;
+        .blessing-text {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: left;
         }
         
-        .features {
+        /* 正能量卡片 */
+        .positive-cards {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 25px;
+            margin: 50px 0;
         }
         
-        .feature {
-            background-color: #fff8e1;
-            padding: 12px 20px;
-            border-radius: 10px;
-            border-left: 4px solid #ffcc00;
-            font-weight: bold;
-            color: #8b4513;
+        .card {
+            background: linear-gradient(145deg, rgba(255, 215, 0, 0.1), rgba(255, 0, 0, 0.1));
+            border-radius: 15px;
+            padding: 25px;
+            width: 300px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s;
         }
         
+        .card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .card i {
+            font-size: 2.5rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        .card h3 {
+            font-size: 1.5rem;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+        
+        /* 页脚 */
         .footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #888;
-            font-size: 0.9rem;
-            padding: 15px;
+            margin-top: 60px;
+            padding: 30px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(255, 215, 0, 0.3);
+        }
+        
+        .footer-text {
+            font-size: 1.1rem;
+            color: #ccc;
         }
         
         /* 响应式设计 */
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 2.2rem;
+        @media (max-width: 768px) {
+            .title {
+                font-size: 3rem;
+                letter-spacing: 5px;
             }
             
-            .dog-container {
-                width: 250px;
-                height: 250px;
+            .subtitle {
+                font-size: 1.4rem;
             }
             
-            .body {
+            .house-container {
+                width: 200px;
+                height: 150px;
+                bottom: 22%;
+            }
+            
+            .mountain-1, .mountain-4 {
                 width: 150px;
-                height: 80px;
-                top: 120px;
-                left: 50px;
+                height: 100px;
             }
             
-            .head {
-                width: 100px;
-                height: 80px;
-                top: 70px;
-                left: 120px;
+            .mountain-2 {
+                width: 250px;
+                height: 180px;
             }
             
-            .description {
-                padding: 20px;
+            .mountain-3 {
+                width: 200px;
+                height: 140px;
+            }
+            
+            .positive-cards {
+                flex-direction: column;
+                align-items: center;
             }
         }
     </style>
 </head>
 <body>
-    <div class="header">
-        <h1>cxxbt</h1>
-        <div class="subtitle">可爱的大黄狗动画网站</div>
+    <!-- 夜空背景 -->
+    <div class="sky" id="sky"></div>
+    
+    <!-- 烟花效果 -->
+    <canvas id="fireworks" class="fireworks-container"></canvas>
+    
+    <!-- 云彩 -->
+    <div class="clouds">
+        <div class="cloud cloud-1"></div>
+        <div class="cloud cloud-2"></div>
+        <div class="cloud cloud-3"></div>
     </div>
     
-    <div class="dog-container">
-        <div class="dog">
-            <!-- 狗的尾巴 -->
-            <div class="tail"></div>
-            
-            <!-- 狗的身体 -->
-            <div class="body"></div>
-            
-            <!-- 狗的腿 -->
-            <div class="leg front left"></div>
-            <div class="leg front right"></div>
-            <div class="leg back left"></div>
-            <div class="leg back right"></div>
-            
-            <!-- 狗的耳朵 -->
-            <div class="ear left"></div>
-            <div class="ear right"></div>
-            
-            <!-- 狗的头部 -->
-            <div class="head"></div>
-            
-            <!-- 狗项圈 -->
-            <div class="collar"></div>
-            
-            <!-- 狗的眼睛 -->
-            <div class="eye left"></div>
-            <div class="eye right"></div>
-            
-            <!-- 狗的鼻子 -->
-            <div class="nose"></div>
-            
-            <!-- 狗的嘴巴 -->
-            <div class="mouth"></div>
+    <!-- 山脉 -->
+    <div class="mountains">
+        <div class="mountain mountain-1"></div>
+        <div class="mountain mountain-2"></div>
+        <div class="mountain mountain-3"></div>
+        <div class="mountain mountain-4"></div>
+    </div>
+    
+    <!-- 房屋 -->
+    <div class="house-container">
+        <div class="house">
+            <div class="roof">
+                <div class="roof-decoration"></div>
+            </div>
+            <div class="door">
+                <div class="door-knob"></div>
+            </div>
+            <div class="window window-left"></div>
+            <div class="window window-right"></div>
+            <div class="chimney">
+                <div class="smoke"></div>
+            </div>
         </div>
     </div>
     
-    <div class="description">
-        <h2>大家好我叫小帅</h2>
-
+    <!-- 小溪 -->
+    <div class="stream-container">
+        <div class="stream">
+            <div class="water"></div>
+        </div>
+    </div>
+    
+    <!-- 主要内容区域 -->
+    <div class="content">
+        <header class="header">
+            <h1 class="title">新春纳福</h1>
+            <p class="subtitle">万家灯火庆团圆，山河锦绣迎新春</p>
+            
+            <!-- 灯笼装饰 -->
+            <div class="lanterns">
+                <div class="lantern lantern-1"></div>
+                <div class="lantern lantern-2"></div>
+                <div class="lantern lantern-3"></div>
+                <div class="lantern lantern-4"></div>
+            </div>
+        </header>
         
-        <div class="features">
-            <div class="feature">纯CSS绘制</div>
-            <div class="feature">动画效果</div>
-            <div class="feature">响应式设计</div>
-            <div class="feature">无JavaScript</div>
-        </div>
+        <!-- 春节祝福 -->
+        <section class="blessings">
+            <h2 class="blessing-title">新春祝福</h2>
+            <p class="blessing-text">在这辞旧迎新的美好时刻，愿您和家人在新的一年里：</p>
+            <p class="blessing-text">家庭和睦如高山般稳固，生活幸福如溪水般长流，事业兴旺如烟花般灿烂，身体健康如松柏般常青。</p>
+            <p class="blessing-text">愿新春的曙光为您带来新的希望，愿万家灯火温暖您前行的道路，愿我们共同迎接充满生机与希望的新一年！</p>
+        </section>
+        
+        <!-- 正能量卡片 -->
+        <section class="positive-cards">
+            <div class="card">
+                <i class="fas fa-home"></i>
+                <h3>家庭和睦</h3>
+                <p>家是温暖的港湾，家和万事兴。春节团圆时刻，珍惜与家人相聚的每一刻。</p>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-mountain"></i>
+                <h3>坚韧不拔</h3>
+                <p>如山般坚定不移，面对困难时保持信心与勇气，终能攀登人生的高峰。</p>
+            </div>
+            
+            <div class="card">
+                <i class="fas fa-water"></i>
+                <h3>生生不息</h3>
+                <p>如水般柔韧持久，无论遇到什么阻碍，都能找到前行的道路，永不停歇。</p>
+            </div>
+        </section>
+        
+        <!-- 页脚 -->
+        <footer class="footer">
+            <p class="footer-text">© 2023 新春纳福 | 设计寓意：高山流水迎春至，万家灯火庆团圆</p>
+            <p class="footer-text">愿这春节的喜庆与正能量伴随您整年，开启美好新篇章！</p>
+        </footer>
     </div>
-    
 
+    <script>
+        // 创建星空背景
+        function createStars() {
+            const sky = document.getElementById('sky');
+            const starCount = 150;
+            
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.classList.add('star');
+                
+                // 随机大小
+                const size = Math.random() * 3 + 1;
+                star.style.width = `${size}px`;
+                star.style.height = `${size}px`;
+                
+                // 随机位置
+                star.style.left = `${Math.random() * 100}%`;
+                star.style.top = `${Math.random() * 100}%`;
+                
+                // 随机亮度
+                const opacity = Math.random() * 0.8 + 0.2;
+                star.style.opacity = opacity;
+                
+                // 闪烁动画
+                const duration = Math.random() * 3 + 2;
+                star.style.animation = `twinkle ${duration}s infinite alternate`;
+                
+                sky.appendChild(star);
+            }
+            
+            // 添加CSS动画
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes twinkle {
+                    0% { opacity: 0.2; }
+                    100% { opacity: 0.8; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+        
+        // 烟花效果
+        function initFireworks() {
+            const canvas = document.getElementById('fireworks');
+            const ctx = canvas.getContext('2d');
+            
+            // 设置canvas尺寸
+            function resizeCanvas() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            
+            // 烟花粒子
+            class Particle {
+                constructor(x, y, color) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = color;
+                    this.radius = Math.random() * 2 + 1;
+                    this.speedX = Math.random() * 3 - 1.5;
+                    this.speedY = Math.random() * 3 - 1.5;
+                    this.life = 30;
+                    this.gravity = 0.05;
+                    this.fade = 0.02;
+                    this.alpha = 1;
+                }
+                
+                update() {
+                    this.speedY += this.gravity;
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.life--;
+                    this.alpha -= this.fade;
+                }
+                
+                draw() {
+                    ctx.save();
+                    ctx.globalAlpha = this.alpha;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.fill();
+                    ctx.restore();
+                }
+            }
+            
+            // 烟花
+            class Firework {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.color = `hsl(${Math.random() * 60}, 100%, 60%)`;
+                    this.particles = [];
+                    this.createParticles();
+                }
+                
+                createParticles() {
+                    const particleCount = 100;
+                    for (let i = 0; i < particleCount; i++) {
+                        this.particles.push(new Particle(this.x, this.y, this.color));
+                    }
+                }
+                
+                update() {
+                    for (let i = this.particles.length - 1; i >= 0; i--) {
+                        this.particles[i].update();
+                        if (this.particles[i].life <= 0 || this.particles[i].alpha <= 0) {
+                            this.particles.splice(i, 1);
+                        }
+                    }
+                }
+                
+                draw() {
+                    this.particles.forEach(particle => particle.draw());
+                }
+                
+                isDone() {
+                    return this.particles.length === 0;
+                }
+            }
+            
+            const fireworks = [];
+            
+            // 创建新烟花
+            function createFirework() {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * (canvas.height / 2);
+                fireworks.push(new Firework(x, y));
+            }
+            
+            // 动画循环
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // 随机生成新烟花
+                if (Math.random() < 0.03) {
+                    createFirework();
+                }
+                
+                // 更新和绘制所有烟花
+                for (let i = fireworks.length - 1; i >= 0; i--) {
+                    fireworks[i].update();
+                    fireworks[i].draw();
+                    
+                    if (fireworks[i].isDone()) {
+                        fireworks.splice(i, 1);
+                    }
+                }
+                
+                requestAnimationFrame(animate);
+            }
+            
+            animate();
+            
+            // 点击创建烟花
+            canvas.addEventListener('click', (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                fireworks.push(new Firework(x, y));
+            });
+        }
+        
+        // 页面加载完成后初始化
+        window.addEventListener('DOMContentLoaded', () => {
+            createStars();
+            initFireworks();
+            
+            // 添加一些春节音效（可选，需要用户交互才能播放）
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // 点击页面播放背景音乐
+            document.body.addEventListener('click', function playMusicOnce() {
+                // 创建简单的春节音乐片段
+                try {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    
+                    oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+                    oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.5); // E5
+                    oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 1.0); // G5
+                    
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2);
+                    
+                    oscillator.start(audioContext.currentTime);
+                    oscillator.stop(audioContext.currentTime + 2);
+                    
+                    // 移除事件监听器，只播放一次
+                    document.body.removeEventListener('click', playMusicOnce);
+                } catch (e) {
+                    console.log("音频播放失败:", e);
+                }
+            }, { once: true });
+        });
+    </script>
 </body>
 </html>
