@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>流星之树 · 精美影集</title>
+    <title>✨ 流星之树 · 梦幻影集 ✨</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            user-select: none;
         }
 
         body {
-            background: radial-gradient(circle at 30% 10%, #0a1f2e, #020813);
+            background: radial-gradient(ellipse at 30% 20%, #0a1128, #010008);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -23,51 +22,50 @@
             padding: 20px;
         }
 
-        /* 画布容器 */
         .tree-container {
             position: relative;
             width: 100%;
             max-width: 1300px;
             margin: 0 auto;
-            background: rgba(0,0,0,0.2);
-            border-radius: 48px;
-            box-shadow: 0 20px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-            backdrop-filter: blur(2px);
+            border-radius: 60px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(3px);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.6), inset 0 1px 2px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
         }
 
         canvas {
             display: block;
             width: 100%;
             height: auto;
-            background: transparent;
-            border-radius: 40px;
+            border-radius: 60px;
+            background: radial-gradient(circle at 20% 30%, #0a1a2a, #020a15);
         }
 
-        /* 叶子容器（绝对定位，覆盖在canvas上） */
         .leaves-area {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            pointer-events: none;  /* 让叶子区域不干扰点击canvas，但叶子本身可点击 */
+            pointer-events: none;
         }
 
+        /* 叶子卡片 — 水晶质感 */
         .leaf-card {
             position: absolute;
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            border-radius: 40% 60% 45% 55% / 55% 40% 60% 45%;
             overflow: hidden;
             cursor: pointer;
             pointer-events: auto;
-            transition: transform 0.2s ease, filter 0.2s;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.4), 0 0 0 2px rgba(255,215,0,0.3);
-            background: rgba(0,0,0,0.3);
-            backdrop-filter: blur(4px);
-            opacity: 0.5;
-            animation: meteorFlash 2s infinite ease-in-out;
-            animation-fill-mode: both;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4), inset 0 0 10px rgba(255, 255, 200, 0.3);
+            background: rgba(255, 240, 180, 0.15);
+            backdrop-filter: blur(5px);
+            opacity: 0.6;
+            animation: leafTwinkle 2.2s infinite alternate;
         }
 
         .leaf-card img {
@@ -75,98 +73,99 @@
             height: 100%;
             object-fit: cover;
             display: block;
-            transition: transform 0.3s;
+            transition: transform 0.3s, filter 0.2s;
+            filter: brightness(0.85) contrast(1.1);
         }
 
-        /* 流星闪烁动画（更华丽） */
-        @keyframes meteorFlash {
+        /* 流星核心动画：划过 + 高光 + 光晕 */
+        @keyframes leafTwinkle {
             0% {
-                opacity: 0.4;
-                transform: scale(0.92) rotate(0deg);
-                box-shadow: 0 0 0px gold, 0 0 0px orange;
-                filter: brightness(0.8) drop-shadow(0 0 0px gold);
+                transform: scale(0.92) rotate(-2deg);
+                opacity: 0.45;
+                box-shadow: 0 0 0px rgba(255, 200, 100, 0), 0 0 0px rgba(255, 100, 0, 0);
+                filter: blur(0px);
             }
-            25% {
+            30% {
+                transform: scale(1.1) rotate(3deg);
                 opacity: 1;
-                transform: scale(1.12) rotate(3deg);
-                box-shadow: 0 0 25px 8px #ffcc44, 0 0 50px 15px #ff8844;
-                filter: brightness(1.5) drop-shadow(0 0 8px gold);
+                box-shadow: 0 0 25px 10px #ffd966, 0 0 40px 20px #ffaa33;
+                filter: brightness(1.4) drop-shadow(0 0 6px gold);
             }
             70% {
+                transform: scale(1.02) rotate(-1deg);
                 opacity: 0.9;
-                transform: scale(1.02) rotate(-2deg);
-                box-shadow: 0 0 15px 4px #ffaa33;
+                box-shadow: 0 0 15px 5px #ffbb44;
                 filter: brightness(1.2);
             }
             100% {
-                opacity: 0.45;
-                transform: scale(0.96) rotate(1deg);
-                box-shadow: 0 0 3px gold;
-                filter: brightness(0.85);
+                transform: scale(0.95) rotate(1deg);
+                opacity: 0.55;
+                box-shadow: 0 0 3px 1px #ffcc88;
+                filter: brightness(0.9);
             }
         }
 
         .leaf-card:hover {
-            transform: scale(1.2) !important;
-            z-index: 200;
+            transform: scale(1.25) rotate(0deg) !important;
             opacity: 1 !important;
-            filter: brightness(1.3);
+            filter: brightness(1.5);
+            z-index: 200;
+            box-shadow: 0 0 40px 15px #ffaa44, 0 0 0 3px rgba(255, 235, 140, 0.8);
             transition: all 0.2s;
-            box-shadow: 0 0 30px 10px #ffaa44;
         }
 
-        /* 标题与落款 */
-        .title-wrapper {
+        /* 标题区域 */
+        .title-art {
             position: absolute;
-            top: 20px;
+            top: 15px;
             left: 0;
             right: 0;
             text-align: center;
             z-index: 20;
             pointer-events: none;
+            text-shadow: 0 0 20px #ffcc66;
         }
         .main-title {
-            font-size: 2.4rem;
-            font-weight: bold;
-            background: linear-gradient(135deg, #ffecb3, #ffcc77);
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffecb3, #ffb347);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            text-shadow: 0 0 20px #ffaa33;
-            letter-spacing: 6px;
+            letter-spacing: 8px;
         }
-        .sub {
-            color: #ddbb88;
+        .subtitle {
+            color: #ffdd99;
             font-size: 1rem;
-            margin-top: 8px;
+            margin-top: 6px;
             font-style: italic;
-            text-shadow: 0 0 5px #000;
+            letter-spacing: 2px;
         }
 
         @media (max-width: 700px) {
             .leaf-card { width: 70px; height: 70px; }
-            .main-title { font-size: 1.6rem; letter-spacing: 2px; }
+            .main-title { font-size: 1.8rem; letter-spacing: 4px; }
         }
     </style>
 </head>
 <body>
 <div class="tree-container" id="treeContainer">
-    <div class="title-wrapper">
-        <div class="main-title">✨ 流星之树 · 图片影集 ✨</div>
-        <div class="sub">每一片叶子都是划过夜空的流星，闪烁间定格回忆</div>
+    <div class="title-art">
+        <div class="main-title">✨ 流 星 之 树 ✨</div>
+        <div class="subtitle">每片叶子都是一颗流星，闪烁间定格回忆</div>
     </div>
-    <canvas id="treeCanvas" width="1100" height="800" style="width:100%; height:auto; max-width:1100px; margin:0 auto; display:block;"></canvas>
+    <canvas id="treeCanvas" width="1200" height="850" style="width:100%; height:auto; max-width:1200px; margin:0 auto; display:block;"></canvas>
     <div class="leaves-area" id="leavesArea"></div>
 </div>
 
 <script>
     (function() {
-        // ---------- 配置你的图片列表 ----------
+        // ======================= 图片列表（请替换为你的真实图片） =======================
         const imageUrls = [
-            "https://picsum.photos/id/1015/200/200",   // 风景
+            "https://picsum.photos/id/1015/200/200",   // 山景
             "https://picsum.photos/id/104/200/200",   // 小鹿
             "https://picsum.photos/id/107/200/200",   // 花草
-            "https://picsum.photos/id/116/200/200",   // 山湖
+            "https://picsum.photos/id/116/200/200",   // 湖
             "https://picsum.photos/id/155/200/200",   // 极光
             "https://picsum.photos/id/169/200/200",   // 日出
             "https://picsum.photos/id/20/200/200",    // 咖啡
@@ -180,251 +179,230 @@
             "https://picsum.photos/id/119/200/200",   // 山水
             "https://picsum.photos/id/21/200/200",    // 瀑布
             "https://picsum.photos/id/38/200/200",    // 城市
-            "https://picsum.photos/id/48/200/200"     // 晚霞
+            "https://picsum.photos/id/48/200/200",    // 晚霞
+            "https://picsum.photos/id/65/200/200",    // 昆虫
+            "https://picsum.photos/id/97/200/200"     // 森林
         ];
-        // 如果你的图片在本地，可以换成相对路径如 "./images/photo1.jpg"
+        // 如果你有自己的图片，直接替换上面数组中的链接即可。
 
-        // 获取容器与canvas
-        const container = document.getElementById('treeContainer');
         const canvas = document.getElementById('treeCanvas');
         const ctx = canvas.getContext('2d');
         const leavesArea = document.getElementById('leavesArea');
 
-        let canvasWidth = 1100;
-        let canvasHeight = 800;
-        let points = [];   // 存储树枝末端挂载点 {x, y}
+        let canvasWidth = 1200;
+        let canvasHeight = 850;
+        let branchEndpoints = [];   // 存储树枝末端坐标 {x, y}
 
-        // 设置画布实际像素尺寸（避免模糊）
-        function resizeCanvas() {
-            const rect = container.getBoundingClientRect();
-            // 固定宽高比 1100:800
+        // 自适应画布尺寸（固定宽高比）
+        function setCanvasSize() {
             canvas.width = canvasWidth;
             canvas.height = canvasHeight;
             canvas.style.width = `${canvasWidth}px`;
             canvas.style.height = `${canvasHeight}px`;
-            drawTree();
         }
 
-        // ---------- 绘制精美树干和树枝（分形递归 + 纹理）----------
-        function drawWoodGrain(ctx, x, y, angle, length, width) {
-            // 辅助：绘制带木纹的线段
-            ctx.save();
-            ctx.translate(x, y);
-            ctx.rotate(angle);
-            // 树干渐变
-            const grad = ctx.createLinearGradient(0, -width/2, 0, width/2);
-            grad.addColorStop(0, '#6b3e1c');
-            grad.addColorStop(0.5, '#8b5a2b');
-            grad.addColorStop(1, '#5a2e12');
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, -width/2, length, width);
-            // 木纹细线
-            ctx.beginPath();
-            ctx.strokeStyle = '#3e1f0c';
-            ctx.lineWidth = 1.5;
-            for (let i = 0; i < 5; i++) {
-                const yOff = -width/2 + (i * width/5);
-                ctx.beginPath();
-                ctx.moveTo(0, yOff);
-                ctx.lineTo(length, yOff + (Math.sin(i) * 2));
-                ctx.stroke();
-            }
-            ctx.restore();
-        }
-
-        // 递归树枝生成器（同时收集末端点）
-        function drawBranch(x, y, angle, length, thickness, generation, maxGen) {
+        // ======================= 精美树干 + 树枝绘制（带自然纹理和光影） =======================
+        function drawWoodyBranch(x, y, angle, length, thickness, generation, maxGen) {
             if (generation > maxGen) return;
             const endX = x + Math.cos(angle) * length;
             const endY = y + Math.sin(angle) * length;
-            // 绘制当前枝干
-            drawWoodGrain(ctx, x, y, angle, length, thickness);
-            
-            // 如果是末级（generation === maxGen 或者长度很小），记录挂载点
-            if (generation === maxGen || length < 25) {
-                points.push({ x: endX, y: endY, generation });
+
+            // 绘制带渐变和木纹的枝干
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(angle);
+            const grad = ctx.createLinearGradient(0, -thickness/2, 0, thickness/2);
+            grad.addColorStop(0, '#5a3c1c');
+            grad.addColorStop(0.5, '#8b5e2c');
+            grad.addColorStop(1, '#4a2a12');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, -thickness/2, length, thickness);
+            // 增加木纹细线
+            ctx.beginPath();
+            ctx.strokeStyle = '#2d1707';
+            ctx.lineWidth = Math.max(1, thickness * 0.2);
+            for (let i = 0; i < 4; i++) {
+                const yOff = -thickness/2 + (i * thickness/4);
+                ctx.beginPath();
+                ctx.moveTo(0, yOff);
+                ctx.lineTo(length, yOff + Math.sin(i) * 2);
+                ctx.stroke();
+            }
+            ctx.restore();
+
+            // 记录末级树枝端点（用于挂载叶子）
+            if (generation === maxGen || length < 30) {
+                branchEndpoints.push({ x: endX, y: endY, generation });
             } else {
-                // 分叉：左枝和右枝，角度偏移量随代数递减
-                const leftAngle = angle - Math.PI / 6 * (1 - generation * 0.1);
-                const rightAngle = angle + Math.PI / 5 * (1 - generation * 0.1);
+                // 递归分支：优雅地弯曲
+                const leftAngle = angle - Math.PI / 5.5 * (1 - generation * 0.08);
+                const rightAngle = angle + Math.PI / 4.8 * (1 - generation * 0.08);
                 const newLength = length * 0.72;
                 const newThick = thickness * 0.7;
-                drawBranch(endX, endY, leftAngle, newLength, newThick, generation+1, maxGen);
-                drawBranch(endX, endY, rightAngle, newLength, newThick, generation+1, maxGen);
-                // 偶尔中间再分一小枝，更茂盛
+                drawWoodyBranch(endX, endY, leftAngle, newLength, newThick, generation + 1, maxGen);
+                drawWoodyBranch(endX, endY, rightAngle, newLength, newThick, generation + 1, maxGen);
+                // 额外增加一个中央小分支，更茂密
                 if (generation <= 2) {
-                    const midAngle = angle + Math.PI / 12;
-                    drawBranch(endX, endY, midAngle, newLength * 0.85, newThick * 0.8, generation+1, maxGen);
+                    const midAngle = angle + Math.PI / 16;
+                    drawWoodyBranch(endX, endY, midAngle, newLength * 0.85, newThick * 0.75, generation + 1, maxGen);
                 }
             }
         }
 
-        // 绘制树干纹理+年轮
-        function drawTrunkDetails() {
-            const trunkBaseX = canvasWidth/2;
-            const trunkBaseY = canvasHeight - 40;
-            const trunkTopY = canvasHeight - 240;
-            const trunkWidth = 62;
-            // 树干渐变
-            const trunkGrad = ctx.createLinearGradient(trunkBaseX - trunkWidth/2, trunkBaseY, trunkBaseX + trunkWidth/2, trunkTopY);
-            trunkGrad.addColorStop(0, '#5a3a1a');
-            trunkGrad.addColorStop(0.5, '#8a5a2a');
-            trunkGrad.addColorStop(1, '#3a1e0a');
+        // 绘制主树干（立体+年轮+青苔）
+        function drawMainTrunk() {
+            const baseX = canvasWidth / 2;
+            const baseY = canvasHeight - 35;
+            const trunkTopY = canvasHeight - 280;
+            const trunkWidth = 70;
+
+            // 树干主体渐变
+            const trunkGrad = ctx.createLinearGradient(baseX - trunkWidth/2, baseY, baseX + trunkWidth/2, trunkTopY);
+            trunkGrad.addColorStop(0, '#6b4622');
+            trunkGrad.addColorStop(0.4, '#9c6e3e');
+            trunkGrad.addColorStop(0.8, '#5a3518');
             ctx.fillStyle = trunkGrad;
             ctx.beginPath();
-            ctx.ellipse(trunkBaseX, trunkBaseY, trunkWidth/2, 30, 0, 0, Math.PI*2);
+            ctx.rect(baseX - trunkWidth/2, trunkTopY, trunkWidth, baseY - trunkTopY);
             ctx.fill();
+            // 树根球根
             ctx.beginPath();
-            ctx.rect(trunkBaseX - trunkWidth/2, trunkTopY, trunkWidth, trunkBaseY - trunkTopY);
+            ctx.ellipse(baseX, baseY, trunkWidth/2 + 8, 28, 0, 0, Math.PI*2);
+            ctx.fillStyle = '#543818';
             ctx.fill();
-            // 树皮纹理（垂直条纹）
+
+            // 树皮纹理（垂直条）
             ctx.save();
             ctx.globalCompositeOperation = 'overlay';
-            for (let i = -3; i <= 3; i++) {
+            for (let i = -4; i <= 4; i++) {
                 ctx.beginPath();
-                ctx.moveTo(trunkBaseX + i*6, trunkTopY);
-                ctx.lineTo(trunkBaseX + i*5 + (i%2)*3, trunkBaseY);
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = '#2c1606';
+                ctx.moveTo(baseX + i * 8, trunkTopY);
+                ctx.lineTo(baseX + i * 6 + (i%2)*3, baseY - 20);
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = '#2c1608';
                 ctx.stroke();
             }
             // 年轮圈
             ctx.beginPath();
-            ctx.arc(trunkBaseX, trunkBaseY - 50, 28, 0, Math.PI*2);
-            ctx.strokeStyle = '#c2823a';
-            ctx.lineWidth = 2;
+            ctx.arc(baseX, baseY - 70, 32, 0, Math.PI*2);
+            ctx.strokeStyle = '#d9943a';
+            ctx.lineWidth = 2.5;
             ctx.stroke();
             ctx.beginPath();
-            ctx.arc(trunkBaseX, trunkBaseY - 70, 20, 0, Math.PI*2);
+            ctx.arc(baseX, baseY - 95, 24, 0, Math.PI*2);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(baseX, baseY - 115, 16, 0, Math.PI*2);
             ctx.stroke();
             ctx.restore();
-        }
 
-        // 绘制树根
-        function drawRoots() {
-            const baseX = canvasWidth/2;
-            const baseY = canvasHeight - 30;
-            ctx.beginPath();
-            ctx.moveTo(baseX, baseY);
-            ctx.quadraticCurveTo(baseX - 40, baseY + 20, baseX - 70, baseY - 10);
-            ctx.lineTo(baseX - 20, baseY - 5);
-            ctx.fillStyle = '#4f2f10';
-            ctx.fill();
-            ctx.beginPath();
-            ctx.moveTo(baseX, baseY);
-            ctx.quadraticCurveTo(baseX + 40, baseY + 25, baseX + 75, baseY - 5);
-            ctx.lineTo(baseX + 25, baseY - 5);
-            ctx.fill();
-        }
-
-        // 主绘制函数
-        function drawTree() {
-            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
-            points = [];
-            // 绘制树干主体
-            drawTrunkDetails();
-            drawRoots();
-            // 开始递归树枝：从树干顶部开始
-            const startX = canvasWidth/2;
-            const startY = canvasHeight - 250;
-            const startAngle = -Math.PI/2; // 向上
-            const startLength = 170;
-            const startThick = 32;
-            drawBranch(startX, startY, startAngle, startLength, startThick, 1, 5);
-            
-            // 增加一些小树枝（额外层次）
-            drawBranch(startX, startY, startAngle - 0.4, 120, 22, 2, 4);
-            drawBranch(startX, startY, startAngle + 0.35, 125, 23, 2, 4);
-            
-            // 添加一些飘浮的“萤火虫”光点（氛围）
-            for (let i = 0; i < 80; i++) {
+            // 青苔斑点
+            for (let i = 0; i < 60; i++) {
+                ctx.fillStyle = `rgba(80, 110, 40, ${Math.random() * 0.5})`;
                 ctx.beginPath();
-                ctx.arc(Math.random() * canvasWidth, Math.random() * canvasHeight * 0.6, Math.random() * 2 + 1, 0, Math.PI*2);
-                ctx.fillStyle = `rgba(255,220,100,${Math.random() * 0.5})`;
+                ctx.ellipse(baseX - 25 + Math.random() * 50, trunkTopY + Math.random() * (baseY - trunkTopY), 3, 5, 0, 0, Math.PI*2);
                 ctx.fill();
             }
         }
 
-        // ---------- 生成图片叶子（根据树枝末端点）----------
-        function placeLeaves() {
-            leavesArea.innerHTML = '';
-            if (points.length === 0) return;
-            // 随机打乱点顺序，让叶子分布更自然（但仍基于树枝末端）
-            const shuffled = [...points];
-            for (let i = shuffled.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        // 绘制氛围光点（萤火虫、飘浮星尘）
+        function drawAtmosphere() {
+            for (let i = 0; i < 180; i++) {
+                ctx.beginPath();
+                const radius = Math.random() * 2.5 + 0.5;
+                ctx.arc(Math.random() * canvasWidth, Math.random() * canvasHeight * 0.7, radius, 0, Math.PI*2);
+                ctx.fillStyle = `rgba(255, 220, 120, ${Math.random() * 0.6})`;
+                ctx.fill();
             }
-            // 取与图片数量相同的点（如果图片多于点，就循环使用点，但尽量让图片都挂上）
-            const leafCount = Math.min(imageUrls.length, shuffled.length);
-            for (let i = 0; i < leafCount; i++) {
-                const pt = shuffled[i % shuffled.length];
-                const imgUrl = imageUrls[i % imageUrls.length];
-                const leafDiv = document.createElement('div');
-                leafDiv.className = 'leaf-card';
-                // 偏移一点让叶子不重叠在树枝正中心
-                const offsetX = (Math.random() - 0.5) * 18;
-                const offsetY = (Math.random() - 0.5) * 12;
-                leafDiv.style.left = (pt.x - 55 + offsetX) + 'px';
-                leafDiv.style.top = (pt.y - 55 + offsetY) + 'px';
-                // 随机动画时长与延迟
-                const duration = (Math.random() * 2.5 + 1.8).toFixed(2);
-                const delay = (Math.random() * 4).toFixed(2);
-                leafDiv.style.animationDuration = `${duration}s`;
-                leafDiv.style.animationDelay = `${delay}s`;
-                // 随机初始旋转
-                const rot = (Math.random() * 30 - 15).toFixed(1);
-                leafDiv.style.transform = `rotate(${rot}deg)`;
+        }
+
+        // 主入口：绘制整棵树
+        function renderTree() {
+            ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+            branchEndpoints = [];
+            drawMainTrunk();
+            // 从树干顶部开始分枝
+            const startX = canvasWidth / 2;
+            const startY = canvasHeight - 280;
+            drawWoodyBranch(startX, startY, -Math.PI/2, 160, 36, 1, 5);
+            drawWoodyBranch(startX, startY, -Math.PI/2 + 0.35, 140, 28, 1, 5);
+            drawWoodyBranch(startX, startY, -Math.PI/2 - 0.3, 135, 27, 1, 5);
+            drawAtmosphere();
+        }
+
+        // 将图片叶子挂载到树枝端点
+        function attachLeaves() {
+            leavesArea.innerHTML = '';
+            if (branchEndpoints.length === 0) return;
+            // 随机打乱端点，让图片分布更自然
+            const shuffledPoints = [...branchEndpoints];
+            for (let i = shuffledPoints.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffledPoints[i], shuffledPoints[j]] = [shuffledPoints[j], shuffledPoints[i]];
+            }
+
+            const totalImages = imageUrls.length;
+            for (let i = 0; i < totalImages; i++) {
+                // 循环使用树枝端点，确保所有图片都能挂载
+                const pt = shuffledPoints[i % shuffledPoints.length];
+                const imgUrl = imageUrls[i];
+                const leaf = document.createElement('div');
+                leaf.className = 'leaf-card';
+                // 微调偏移，避免完全重叠
+                const offX = (Math.random() - 0.5) * 24;
+                const offY = (Math.random() - 0.5) * 20;
+                leaf.style.left = `${pt.x - 50 + offX}px`;
+                leaf.style.top = `${pt.y - 50 + offY}px`;
+                // 随机动画时长与延迟（流星节奏各异）
+                const duration = (Math.random() * 2.2 + 1.5).toFixed(2);
+                const delay = (Math.random() * 5).toFixed(2);
+                leaf.style.animationDuration = `${duration}s`;
+                leaf.style.animationDelay = `${delay}s`;
                 const img = document.createElement('img');
                 img.src = imgUrl;
-                img.alt = `leaf-${i}`;
-                leafDiv.appendChild(img);
-                leafDiv.addEventListener('click', (e) => {
+                img.alt = `memory-${i}`;
+                leaf.appendChild(img);
+                leaf.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    alert(`✨ 流星划过，珍藏回忆 ✨\n图片地址：${imgUrl}`);
-                    // 你可以替换为lightbox或大图展示
+                    alert(`✨ 流星划过，珍藏回忆 ✨\n图片：${imgUrl}`);
                 });
-                leavesArea.appendChild(leafDiv);
+                leavesArea.appendChild(leaf);
             }
-            // 如果图片数量多于树枝点，再额外随机添加一些飘浮的叶子（没有树枝连接，但为了展示所有图片）
-            if (imageUrls.length > shuffled.length) {
-                for (let i = shuffled.length; i < imageUrls.length; i++) {
-                    const randX = 100 + Math.random() * (canvasWidth - 200);
-                    const randY = 100 + Math.random() * (canvasHeight * 0.7);
-                    const leafDiv = document.createElement('div');
-                    leafDiv.className = 'leaf-card';
-                    leafDiv.style.left = (randX - 55) + 'px';
-                    leafDiv.style.top = (randY - 55) + 'px';
-                    const duration = (Math.random() * 2.5 + 1.8).toFixed(2);
+
+            // 如果树枝端点少于图片数量，额外的图片以“飘浮星叶”形式存在（不依赖树枝）
+            if (totalImages > shuffledPoints.length) {
+                for (let i = shuffledPoints.length; i < totalImages; i++) {
+                    const randX = 120 + Math.random() * (canvasWidth - 240);
+                    const randY = 80 + Math.random() * (canvasHeight * 0.6);
+                    const leaf = document.createElement('div');
+                    leaf.className = 'leaf-card';
+                    leaf.style.left = `${randX - 50}px`;
+                    leaf.style.top = `${randY - 50}px`;
+                    const duration = (Math.random() * 2.2 + 1.5).toFixed(2);
                     const delay = (Math.random() * 5).toFixed(2);
-                    leafDiv.style.animationDuration = `${duration}s`;
-                    leafDiv.style.animationDelay = `${delay}s`;
+                    leaf.style.animationDuration = `${duration}s`;
+                    leaf.style.animationDelay = `${delay}s`;
                     const img = document.createElement('img');
                     img.src = imageUrls[i];
-                    img.alt = `extra-leaf-${i}`;
-                    leafDiv.appendChild(img);
-                    leafDiv.addEventListener('click', (e) => {
-                        alert(`✨ 星尘闪烁 ✨\n${imageUrls[i]}`);
-                    });
-                    leavesArea.appendChild(leafDiv);
+                    leaf.appendChild(img);
+                    leaf.addEventListener('click', (e) => alert(`✨ 星尘之忆 ✨\n${imageUrls[i]}`));
+                    leavesArea.appendChild(leaf);
                 }
             }
         }
 
-        // 初始化绘制和叶子放置
+        // 初始化
         function init() {
-            resizeCanvas();
-            // 等待canvas绘制完成后再放置叶子（因为points需要先生成）
-            drawTree();
-            placeLeaves();
+            setCanvasSize();
+            renderTree();
+            attachLeaves();
         }
 
         window.addEventListener('resize', () => {
-            // 重新绘制树（但叶子位置要重新计算）
-            drawTree();
-            placeLeaves();
+            // 保持画布大小不变（固定宽高比），重新渲染位置
+            renderTree();
+            attachLeaves();
         });
-        
         init();
     })();
 </script>
